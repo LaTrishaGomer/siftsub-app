@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block head %}
@@ -7,16 +6,22 @@
 {% endblock %}
 
 {% block content %}
-
-{% if not user.is_authenticated %}
-<section>
-    <h1>Login</h1>
-    <form class="login" action="{% url 'home' %}" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="hidden" name="name" value="{{ next }}" />
-        <button type="submit" class="btn submit">Login</button>
-    </form>
+<section class="hero">
+  <div class="overlay"></div>
+  <div class="hero-content">
+    <h1>SiftSub</h1>
+    <p class="subtitle">Smarter Subscription Management</p>
+    <p class="tagline">
+      On One Platform, <br />
+      Manage All Subscriptions
+    </p>
+    <p class="features">
+      Featuring subscription management, payment reminders, and spending insights
+    </p>
+    <div class="cta-buttons">
+      <a href="{% url 'signup' %}" class="btn light">Sign Up</a>
+      <a href="{% url 'signin' %}" class="btn outline">Log In</a>
+    </div>
+  </div>
 </section>
-{% endif %}
 {% endblock %}
