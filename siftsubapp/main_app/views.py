@@ -27,7 +27,8 @@ def home(request):
 
     return render(request, 'home.html', {
         'form': form,
-        'error_message': error_message
+        'error_message': error_message,
+        'on_homepage': True
     })
 
 def signup(request):
@@ -44,6 +45,25 @@ def signup(request):
     form  = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'signup.html', context)
+
+
+def signin(request):
+    error_message = ''
+    form = AuthenticationForm()
+
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('subscription-index')
+        else:
+            error_message = 'Invalid login credentials'
+
+    return render(request, 'signin.html', {
+        'form': form,
+        'error_message': error_message
+    })
 
 def about(request):
     return render(request, 'about.html')
