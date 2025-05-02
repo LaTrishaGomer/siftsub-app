@@ -7,18 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<section class="logo-container">
-    <div class="sub-container">
-        <img 
-            src="{% static 'images/#.svg' %}" 
-            alt="Subscription Tracker" 
-        />
-    </div>
-    <img 
-        src="{% static 'images/#.svg' %}" 
-        alt="Text reads: SiftSub" 
-    />
-</section>
+
 {% if not user.is_authenticated %}
 <section>
     <h1>Login</h1>
