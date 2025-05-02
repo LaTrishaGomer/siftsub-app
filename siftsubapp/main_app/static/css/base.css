@@ -1,23 +1,8 @@
-/* static/css/base.css  */
 
 html {
     box-sizing: border-box;
 }
 
-/* The Universal Selector */
-*,
-/* All elements*/
-*::before,
-/* All ::before pseudo-elements */
-*::after {
-    /* All ::after pseudo-elements */
-    /* height & width will now include border & padding by default
-       but can be over-ridden as needed */
-    box-sizing: inherit;
-}
-
-/* resets font size to be 62.5% of the user preference - 
-       in most browser configurations this will be 10px */
 :root {
     font-size: 62.5%;
 }
@@ -50,6 +35,30 @@ body {
     --font-reg: 1.6rem;
     --card-border-radius: 6px;
 }
+
+
+body.home .logo-dark {
+    display: none !important;
+  }
+  
+  body.home .logo-white {
+    display: block !important;
+  }
+  
+  body:not(.home) .logo-dark {
+    display: block !important;
+  }
+  
+  body:not(.home) .logo-white {
+    display: none !important;
+  }
+  
+body.home nav a,
+body.home #logout-form button {
+  color: white;
+}
+
+
 
 header {
     display: flex;
@@ -95,6 +104,7 @@ nav ul {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 12px;
 }
 
 nav li {
@@ -113,6 +123,7 @@ header.navbar {
     align-items: center;
     padding: 0 20px;
   }
+
   
   .header-logo-container img {
     height: 40px; 
@@ -282,4 +293,6 @@ header.navbar {
 
 #logout-form button:hover {
     color: var(--link-hover-color);
-}
+}  
+
+
