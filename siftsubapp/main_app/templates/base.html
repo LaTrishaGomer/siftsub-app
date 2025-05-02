@@ -8,15 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" type="image/png" href="{% static 'images/header-logo.svg' %}" />
     <title>Subscription Tracker</title>
+
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {% block head %} 
     {% endblock %}
   </head>
-  <body>
+  <body class="{% if on_homepage %}home{% endif %}">
     <header class="navbar">
       <div class="header-logo-container">
         <a href="/">
-          <img src="{% static 'images/header-logo.svg' %}" alt="Sift Sub Logo" />
+          <img src="{% static 'images/header-logo.svg' %}" alt="Sift Sub Logo" class="logo logo-dark" />
+          <img src="{% static 'images/header-logo-white.svg' %}" alt="Sift Sub Logo" class="logo logo-white" />
         </a>
       </div>
       <nav>
@@ -34,7 +36,7 @@
           </li>
           {% else %}
           <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'home' %}">Login</a></li>
+          <li><a href="{% url 'signin' %}">Login</a></li>
           <li><a href="{% url 'signup' %}">Signup</a></li>
           {% endif %}
         </ul>
