@@ -2,14 +2,33 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.views import LoginView
-from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Subscription  
+from .models import Subscription
 
-class Home(LoginView):
-    template_name = 'home.html'
+
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('subscription-index')  
+
+    error_message = ''
+    form = AuthenticationForm()
+
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('subscription-index')
+        else:
+            error_message = 'Invalid login credentials'
+
+    return render(request, 'home.html', {
+        'form': form,
+        'error_message': error_message
+    })
 
 def signup(request):
     error_message = ''
