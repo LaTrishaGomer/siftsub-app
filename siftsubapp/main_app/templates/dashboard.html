@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Welcome, {{ user.username }}</h1>
+
+<section class="overview">
+  <div>Total Monthly Cost: ${{ total_cost }}</div>
+  <div>Active Subs: {{ subscriptions.count }}</div>
+  <div>Due Soon: {{ upcoming.count }}</div>
+</section>
+
+<section class="subscriptions-list">
+  <h2>My Subscriptions</h2>
+  <a href="{% url 'subscription-create' %}" class="add-subscription-btn">+ Add Subscription</a>
+  
+  {% for sub in subscriptions %}
+    <div class="sub-card">
+      <strong>{{ sub.name }}</strong> – ${{ sub.cost }}
+      <span>{{ sub.renewal_date }}</span>
+      <div class="sub-actions">
+        <a href="{% url 'subscription-update' sub.id %}">Edit</a>
+        <a href="{% url 'subscription-delete' sub.id %}">Delete</a>
+      </div>
+    </div>
+  {% empty %}
+    <p>You don’t have any subscriptions yet. Click “Add Subscription” to get started!</p>
+  {% endfor %}
+</section>
+
+{% endblock %}
