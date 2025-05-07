@@ -1,0 +1,41 @@
+.about-page {
+  font-family: "Inter", sans-serif;
+  padding: 32px;
+  min-height: 100vh;
+}
+
+.about-container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.about-container h1 {
+  font-size: 40px;
+  margin-bottom: 16px;
+  color: #222222;
+}
+
+.about-container p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.features ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.features li {
+  padding: 8px 0;
+  font-size: 17px;
+}
+
+.mission h2,
+.features h2 {
+  margin-top: 32px;
+  font-size: 22px;
+  color: #333333;
+}
+
+  

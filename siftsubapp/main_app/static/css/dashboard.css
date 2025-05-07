@@ -1,0 +1,115 @@
+.dashboard-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 32px;
+}
+
+.dashboard-header h1 {
+  font-size: 32px;
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  flex: 1;
+  padding: 16px;
+  background: #f0f4f8;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.actions {
+  text-align: right;
+  margin-bottom: 16px;
+  margin-top: 50px;
+}
+
+.btn-add {
+  background: #007bff;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.subs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sub-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.sub-item > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sub-actions a {
+  margin-left: 8px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.edit-btn {
+  color: #28a745;
+}
+
+.delete-btn {
+  color: #dc3545;
+}
+
+.status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status.paused {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status.canceled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+@media (max-width: 600px) {
+  .stats {
+    flex-direction: column;
+  }
+
+  .sub-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sub-actions {
+    margin-top: 8px;
+  }
+}
+
+  
