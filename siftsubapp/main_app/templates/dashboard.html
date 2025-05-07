@@ -1,31 +1,99 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-
-<h1>Welcome, {{ user.username }}</h1>
-
-<section class="overview">
-  <div>Total Monthly Cost: ${{ total_cost }}</div>
-  <div>Active Subs: {{ subscriptions.count }}</div>
-  <div>Due Soon: {{ upcoming.count }}</div>
-</section>
-
-<section class="subscriptions-list">
-  <h2>My Subscriptions</h2>
-  <a href="{% url 'subscription-create' %}" class="add-subscription-btn">+ Add Subscription</a>
-  
-  {% for sub in subscriptions %}
-    <div class="sub-card">
-      <strong>{{ sub.name }}</strong> – ${{ sub.cost }}
-      <span>{{ sub.renewal_date }}</span>
-      <div class="sub-actions">
-        <a href="{% url 'subscription-update' sub.id %}">Edit</a>
-        <a href="{% url 'subscription-delete' sub.id %}">Delete</a>
-      </div>
+<section class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Hello, {{ user.username }}</h1>
+    <div class="stats">
+      <div class="stat-card">Total Monthly Cost<br><strong>${{ total_cost }}</strong></div>
+      <div class="stat-card">All Subscriptions<br><strong>{{ subscriptions.count }}</strong></div>
+      <div class="stat-card">Due In Next 3 Days<br><strong>{{ upcoming.count }}</strong></div>
     </div>
-  {% empty %}
-    <p>You don’t have any subscriptions yet. Click “Add Subscription” to get started!</p>
-  {% endfor %}
+  </div>
+
+  <div class="actions">
+    <a href="{% url 'subscription-create' %}" class="btn-add">+ Add Subscription</a>
+  </div>
+
+  <!-- Chart section -->
+  <div class="chart-container" style="margin-bottom: 2rem;">
+    <canvas id="monthlySpendingChart" width="400" height="200"></canvas>
+  </div>
+
+  <div class="subs-list">
+    {% for sub in subscriptions %}
+      <div class="sub-item">
+        {% if sub.uploaded_logo %}
+          <img src="{{ sub.uploaded_logo.url }}" alt="{{ sub.name }} logo" style="height: 40px;">
+        {% elif sub.logo %}
+          <img src="{% static 'images/logos/' %}{{ sub.logo }}" alt="{{ sub.name }} logo" style="height: 40px;">
+        {% endif %}
+        <div>
+          <strong>{{ sub.name }}</strong><br>
+          <small>${{ sub.cost }} — {{ sub.renewal_date }}</small>
+          <span class="status {{ sub.status }}">{{ sub.get_status_display }}</span>
+        </div>
+        <div class="sub-actions">
+          <a href="{% url 'subscription-update' sub.id %}" class="edit-btn">Edit</a>
+          <a href="{% url 'subscription-delete' sub.id %}" class="delete-btn">Delete</a>
+          <a href="{% url 'subscription-archive' sub.id %}" class="archive-btn">Archive</a>
+        </div>
+      </div>
+    {% empty %}
+      <p>You don’t have any subscriptions yet. Click “Add Subscription” to get started!</p>
+    {% endfor %}
+  </div>
 </section>
 
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('monthlySpendingChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: {{ chart_labels|safe }},
+      datasets: [{
+        label: 'Monthly Spending (USD)',
+        data: {{ chart_data|safe }},
+        backgroundColor: [
+          '#2563eb', // Jan
+          '#10b981', // Feb
+          '#f59e0b', // Mar
+          '#ef4444', // Apr
+          '#a78bfa', // May
+          '#f472b6', // Jun
+          '#34d399', // Jul
+          '#facc15', // Aug
+          '#3b82f6', // Sep
+          '#e879f9', // Oct
+          '#60a5fa', // Nov
+          '#4ade80'  // Dec
+],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return `$${context.parsed.y}`;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: (val) => '$' + val }
+        }
+      }
+    }
+  });
+</script>
 {% endblock %}
+
