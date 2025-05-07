@@ -10,7 +10,7 @@ SiftSub lets you log your monthly subscriptions, see what’s due soon, and trac
 
 ## 📸 Screenshot
 
-![Dashboard Screenshot](static/images/#.png)
+![Dashboard Screenshot](static/images/dashboard.png)
 
 ---
 
