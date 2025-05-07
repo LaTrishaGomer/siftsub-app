@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock %}
 
 {% block content %}
-
-{% if not user.is_authenticated %}
-<section>
-    <form class="login" action="{% url 'home' %}" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="hidden" name="name" value="{{ next }}" />
-        <button type="submit" class="btn submit">Login</button>
+<div class="login-page">
+  <div class="login-container">
+    <h2>Sign in</h2>
+    <form action="{% url 'home' %}" method="POST" class="login-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-login">Sign In →</button>
     </form>
-</section>
-{% endif %}
+    <div class="form-footer">
+      <p>Don’t have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+    </div>
+  </div>
+</div>
 {% endblock %}

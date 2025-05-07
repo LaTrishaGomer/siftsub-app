@@ -3,24 +3,24 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <h1>Sign Up</h1>
-    <img src="{% static 'images/#.svg' %}" alt="#" />
+<div class="login-page">
+  <div class="login-container">
+    <h2>Sign Up</h2>
+    {% if error_message %}
+      <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+    <form action="" method="POST" autocomplete="off" class="login-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn-login">Create Account →</button>
+    </form>
+    <div class="form-footer">
+      <p>Already have an account? <a href="{% url 'signin' %}">Sign In</a></p>
+    </div>
+  </div>
 </div>
-
-{% if error_message %}
-<p class="red-text">{{ error_message }}</p>
-{% endif %}
-
-<form action="" method="POST" autocomplete="off" class="form-container">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <button class="btn submit">Submit!</button>
-</form>
 {% endblock %}
