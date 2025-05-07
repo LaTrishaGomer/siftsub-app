@@ -16,7 +16,7 @@ if not 'ON_HEROKU' in os.environ:
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
-    'main_app',
+    'siftsubapp.main_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
