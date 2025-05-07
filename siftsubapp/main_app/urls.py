@@ -16,6 +16,7 @@ urlpatterns = [
     path('subscriptions/create/', SubscriptionCreate.as_view(), name='subscription-create'),
     path('subscriptions/<int:pk>/edit/', SubscriptionUpdate.as_view(), name='subscription-update'),
     path('subscriptions/<int:pk>/delete/', SubscriptionDelete.as_view(), name='subscription-delete'),
+    path('subscriptions/<int:subscription_id>/archive/', views.archive_subscription, name='subscription-archive'),
 ]
 
 
