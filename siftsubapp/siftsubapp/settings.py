@@ -1,13 +1,19 @@
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+import dj_database_url
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-hwwc152q)fa03u8k#_u&h39%99f!)c**0v4m67dk*7p&7l(2(n'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True
+if not 'ON_HEROKU' in os.environ:
+    DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'main_app',
@@ -27,6 +33,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'siftsubapp.urls'
@@ -48,12 +55,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'siftsubapp.wsgi.application'
 
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'siftsubapp',
-   }
-}
+
+if 'ON_HEROKU' in os.environ:
+    DATABASES = {
+        "default": dj_database_url.config(
+            env='DATABASE_URL',
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'siftsubapp',
+        }
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -79,6 +98,8 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
